@@ -1,0 +1,71 @@
+#delete-menu-item-modal{
+
+    display: none;
+
+}
+
+#add-menu-item-form {
+
+    display: flex;
+    gap: 20px;
+
+}
+
+#add-menu-item-form fieldset{
+
+    width: 50%;
+
+}
+
+#add-menu-item-form .btn-align{
+
+    width: 50%;
+    align-content: center;
+    text-align: center;
+
+}
+
+#add-menu-item-form input, #add-menu-item-form select, #add-menu-item-form textarea{
+
+    width: 100%;
+    margin-bottom: 20px !important;
+
+}
+
+.edit-menu-item-form {
+
+    display: none;
+
+}
+
+.edit-menu-item-input {
+
+    display: flex;
+
+}
+
+.btn-revert {
+
+    padding: 0 16px !important;
+    background-color: #3f3f3f;
+    cursor: pointer;
+
+}
+
+.btn-revert:hover {
+
+    background-color: #00b5ff;
+
+}
+
+.nb-menu-table td {
+
+    align-content: center;
+
+}
+
+.nb-menu-table td {
+
+    padding: 10px 16px !important;
+
+}

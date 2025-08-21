@@ -1,0 +1,28 @@
+'ISP.Carteo:Menu':
+  superTypes:
+    'Neos.Neos:Content': true
+  childNodes:
+    menuItems:
+      type: 'Neos.Neos:ContentCollection'
+  ui:
+    label: Speisekarte
+    group: carteo
+    position: 1
+    icon: icon-table
+    inspector:
+      groups:
+        general:
+          label: General
+          icon: 'icon-wrench'
+          position: 1100
+          collapsed: false
+  properties:
+    name:
+      type: string
+      defaultValue: ''
+      ui:
+        showInCreationDialog: true   
+        label: Name
+        reloadIfChanged: TRUE
+        inspector:
+          group: 'general'

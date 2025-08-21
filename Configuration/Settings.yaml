@@ -1,0 +1,34 @@
+Neos:  
+  Neos:    
+    fusion:
+      autoInclude:
+        'ISP.Carteo': true         
+    nodeTypes:
+      groups:
+        carteo:
+          position: 10
+          label: 'Carteo'
+          collapsed: true
+    modules:
+      'management':
+        submodules:
+          'managerModule':
+            label: 'Carteo Manager'
+            controller: 'ISP\Carteo\Controller\ManagerController'
+            description: 'Mit diesem Modul kann die Speisekarte aktualisiert und exportiert werden.'
+            icon: icon-clipboard-list
+            additionalResources:
+              javaScripts:
+                - resource://ISP.Carteo/Public/JavaScript/backend.js              
+              styleSheets:
+                - resource://ISP.Carteo/Public/Styles/backend.css
+          'studioModule':
+            label: 'Carteo Studio'
+            controller: 'ISP\Carteo\Controller\StudioController'
+            description: 'Mit diesem Modul kann die Speisekarte aktualisiert und exportiert werden.'
+            icon: icon-clipboard-list
+            additionalResources:
+              javaScripts:
+                - resource://ISP.Carteo/Public/JavaScript/backend.js              
+              styleSheets:
+                - resource://ISP.Carteo/Public/Styles/backend.css

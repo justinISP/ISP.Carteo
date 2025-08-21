@@ -1,0 +1,35 @@
+prototype(ISP.Carteo:Menu) < prototype(Neos.Neos:ContentComponent) {
+
+    inUse = ${q(documentNode).find('[instanceof ISP.Carteo:RKMenu]').get(0)}
+    
+    integration = ${'<style data-slipstream>' + ISP.Skeleton.Minify.minifyCSS(this.styles) + '</style>'}
+    integration.@if.willBeRendered = ${this.inUse == node}
+
+    styles = '
+    
+    '
+
+    menuItems = Neos.Neos:ContentCollection {
+        nodePath = 'menuItems'
+        attributes {
+            class = 'menu-category-ct'
+        }
+    }
+
+    name = ${q(node).property('name')}
+    showName = ${q(node).property('showName')}
+
+    renderer = afx`
+        {props.integration}
+        <div class="menu-ct">
+            
+            <h2
+            @if.matches={props.showName == true}
+            >{props.name}</h2>
+
+            {props.menuItems}
+
+        </div>
+
+    `
+}

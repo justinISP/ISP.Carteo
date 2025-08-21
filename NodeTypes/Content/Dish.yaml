@@ -1,0 +1,164 @@
+'ISP.Carteo:Menu.Dish':
+  superTypes:
+    'Neos.Neos:Content': true
+  ui:
+    label: Gericht
+    icon: icon-box
+    group: carteo
+    position: 3
+    inspector:
+      groups:
+        general:
+          label: General
+          icon: 'icon-wrench'
+          position: 1100
+          collapsed: false
+  properties:
+    name:
+      type: string
+      defaultValue: ''
+      ui:
+        inlineEditable: true
+        inline:
+          editorOptions:
+            linking:
+              anchorLink: true
+            formatting:
+              strong: true
+              em: true
+              sub: true
+              sup: true
+              p: true
+              h1: true
+              h2: true
+              h3: true
+              h4: true
+              h5: false
+              h6: false
+              code: false
+              pre: true
+              removeFormat: true
+              table: false
+              a: true
+              ol: false
+              ul: false
+              left: true
+              center: true
+              right: true
+              justify: true
+              underline: false
+              strikethrough: false
+              blockquote: true
+            autoparagraph: true
+            placeholder: Name hier eintragen ...
+    description:
+      type: string
+      defaultValue: ''
+      ui:
+        inlineEditable: true
+        inline:
+          editorOptions:
+            linking:
+              anchorLink: true
+            formatting:
+              strong: true
+              em: true
+              sub: true
+              sup: true
+              p: true
+              h1: true
+              h2: true
+              h3: true
+              h4: true
+              h5: false
+              h6: false
+              code: false
+              pre: true
+              removeFormat: true
+              table: false
+              a: true
+              ol: false
+              ul: false
+              left: true
+              center: true
+              right: true
+              justify: true
+              underline: false
+              strikethrough: false
+              blockquote: true
+            autoparagraph: true
+            placeholder: Beschreibung hier eintragen ...
+    price:
+      type: string
+      defaultValue: ''
+      ui:
+        inlineEditable: true
+        inline:
+          editorOptions:
+            linking:
+              anchorLink: true
+            formatting:
+              strong: true
+              em: true
+              sub: true
+              sup: true
+              p: true
+              h1: true
+              h2: true
+              h3: true
+              h4: true
+              h5: false
+              h6: false
+              code: false
+              pre: true
+              removeFormat: true
+              table: false
+              a: true
+              ol: false
+              ul: false
+              left: true
+              center: true
+              right: true
+              justify: true
+              underline: false
+              strikethrough: false
+              blockquote: true
+            autoparagraph: true
+            placeholder: Preis ...
+    moreInfo:
+      type: string
+      defaultValue: ''
+      ui:
+        inlineEditable: true
+        inline:
+          editorOptions:
+            linking:
+              anchorLink: true
+            formatting:
+              strong: true
+              em: true
+              sub: true
+              sup: true
+              p: true
+              h1: true
+              h2: true
+              h3: true
+              h4: true
+              h5: false
+              h6: false
+              code: false
+              pre: true
+              removeFormat: true
+              table: false
+              a: true
+              ol: false
+              ul: false
+              left: true
+              center: true
+              right: true
+              justify: true
+              underline: false
+              strikethrough: false
+              blockquote: true
+            autoparagraph: true
+            placeholder: Weitere Informationen hier eintragen ...

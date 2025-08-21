@@ -1,0 +1,55 @@
+ISP.Carteo.StudioController.showMenu = Neos.Fusion:Component {
+
+    renderer = afx`
+
+        <div class="neos-row-fluid">
+            <div style="display:flex; width: 100%; padding-bottom: 20px !important;justify-content: space-between;    align-items: center;">
+                <p style="font-size: 20px !important; font-weight: bold;">{menuName}</p>
+                <div style="display: flex; gap:10px;">
+<!--                    <Neos.Neos:NodeLink node={menuNodeObj} class="neos-button">
+                        <i style="margin-right: 10px;" class="fas fa-pen icon-white"></i>Speisekarte bearbeiten
+                    </Neos.Neos:NodeLink> -->
+                    <Neos.Fusion.Form:Form
+                    form.target.action="exportMenu"
+                    attributes.id="export-menu-form">
+                    <Neos.Fusion.Form:Hidden 
+                        field.name="selectedNode" 
+                        field.value={selectedNode} />
+                        <div class="btn-align">
+                            <Neos.Fusion.Form:Button attributes.class="btn"><i style="margin-right: 10px;" class="fas fa-download icon-white"></i>Speisekarte als PDF exportieren</Neos.Fusion.Form:Button>
+                        </div>
+                    </Neos.Fusion.Form:Form>
+                </div>
+            </div>
+            <Neos.Fusion:Loop itemKey="catName" itemName="category" items={categories}>
+                <p>{catName}</p>
+                <table class="neos-table nb-menu-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Beschreibung</th>
+                            <th>Preis</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <Neos.Fusion:Loop itemName="dish" items={category}>
+                        <tr>
+                            <td style="width: 30%">
+                                <span>{dish.properties.name}</span>
+                            </td>
+                            <td style="width: 60%">
+                                <span>{dish.properties.description}</span>
+                            </td>
+                            <td style="width: 10%">
+                                <span>{dish.properties.price}</span>
+                            </td>
+                        </tr>
+                        </Neos.Fusion:Loop>
+                    </tbody>
+                </table>
+            </Neos.Fusion:Loop>
+        </div>
+
+
+    `
+}

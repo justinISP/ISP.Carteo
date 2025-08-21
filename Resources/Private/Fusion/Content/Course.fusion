@@ -1,0 +1,81 @@
+prototype(ISP.Carteo:Menu.Course) < prototype(Neos.Neos:ContentComponent) {
+
+    inUse = ${q(documentNode).find('[instanceof ISP.Carteo:Menu.Course]').get(0)}
+    
+    integration = ${'<style data-slipstream>' + ISP.Skeleton.Minify.minifyCSS(this.styles) + '</style>'}
+    integration.@if.willBeRendered = ${this.inUse == node}
+
+    styles = '
+    
+        .menu-category-layout{
+        
+            display:flex;
+            gap: 40px;
+
+        }
+
+        .menu-category-layout.right{
+
+            flex-direction: row;
+        
+        }
+        
+        .menu-category-layout.left{
+
+            flex-direction: row-reverse;
+        
+        }
+
+        .menu-category-text{
+        
+            flex-grow: 1;
+        
+        }
+
+        .menu-category-image {
+        
+            width: 30%;
+            min-height: 100%;
+            object-fit: cover;
+        
+        }
+
+    '
+
+    courseItems = Neos.Neos:ContentCollection {
+        nodePath = 'courseItems'
+        attributes {
+            class = 'dish-ct'
+        }
+    }
+
+    direction = ${q(node).property('direction')}
+    name = ${q(node).property('name')}
+    image = ${q(node).property('image')}
+    pic = ${q(node).property("pic")}
+
+    renderer = afx`
+        {props.integration}
+            
+            <div class={'menu-category-layout ' + props.direction}>
+                <div class="menu-category-text">
+                    <p>
+                        <span class="rk-font-color-red rk-font-size-large">
+                            <strong>{props.name}</strong>
+                        </span>
+                    </p>    
+                    {props.courseItems}
+                </div>
+                <Neos.Neos:ImageTag
+                    @if.has={props.pic}
+                    asset={props.pic}
+                    maximumWidth="1200"
+                    maximumHeight="800"
+                    attributes.alt={props.name}
+                    attributes.title={props.name}
+                    attributes.class="menu-category-image"
+                />
+            </div>
+
+    `
+}

@@ -1,0 +1,20 @@
+{
+    "description": "",
+    "type": "neos-package",
+    "name": "isp/carteo",
+    "require": {
+        "neos/flow": "*",
+        "mpdf/mpdf": "^8.2",
+        "isp/skeleton": "dev-lower-neos-9"
+    },
+    "autoload": {
+        "psr-4": {
+            "ISP\\Carteo\\": "Classes/"
+        }
+    },
+    "extra": {
+        "neos": {
+            "package-key": "ISP.Carteo"
+        }
+    }
+}

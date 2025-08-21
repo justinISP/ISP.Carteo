@@ -1,0 +1,190 @@
+ISP.Carteo.ManagerController.index = Neos.Fusion:Component {
+
+    renderer = afx`
+
+        <div class="neos-row-fluid">
+            <div style="display:flex; width: 100%; padding-bottom: 20px !important;justify-content: space-between;    align-items: center;">
+                <p style="font-size: 20px !important; font-weight: bold;">Speisekarte</p>
+                <div style="display: flex; gap:10px;">
+                    <Neos.Fusion:Link.Action class="neos-button" href.package="ISP.Carteo" href.controller="Manager" href.action="addMenuItem">
+                        <i class="fas fa-plus icon-white"></i> Gericht hinzufügen
+                    </Neos.Fusion:Link.Action>
+                    <Neos.Fusion:Link.Action class="neos-button" href.package="ISP.Carteo" href.controller="Manager" href.action="exportMenu">
+                        <i class="fas fa-download icon-white"></i> Speisekarte als PDF exportieren
+                    </Neos.Fusion:Link.Action>
+                </div>
+            </div>
+            <table class="neos-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Beschreibung</th>
+                        <th>Preis</th>
+                        <th>Menüpunkt</th>
+                        <th>Weitere Informationen</th>
+                        <th>&nbsp;</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <Neos.Fusion:Loop itemName="dish" items={allEntries}>
+                    <tr>
+                        <td>
+                            <span onclick="openMenuItemChange(this)" title="" style="cursor:pointer;">{dish.name} <i class="fas fa-pencil-alt"></i></span>
+                            <Neos.Fusion.Form:Form
+                            form.target.action="editEntry"
+                            attributes.class="edit-menu-item-form"> 
+                                <div class="edit-menu-item-input">
+                                    <Neos.Fusion.Form:Input 
+                                        field.name="updateValue" 
+                                        field.value={dish.name}
+                                        attributes.id="name"	/>
+                                    <Neos.Fusion.Form:Hidden 
+                                        field.name="dish" 
+                                        field.value={dish} />
+                                    <Neos.Fusion.Form:Hidden 
+                                        field.name="updateName" 
+                                        field.value="name" />
+                                    <Neos.Fusion.Form:Button attributes.class="btn"><i class="far fa-save icon-white"></i></Neos.Fusion.Form:Button>
+                                    <div onclick="revertMenuItemChange(this)" class="btn btn-revert"><i class="fas fa-undo"></i></div>
+                                </div>
+                            </Neos.Fusion.Form:Form>
+                        </td>
+                        <td>
+                            <span onclick="openMenuItemChange(this)" title="" style="cursor:pointer;">{dish.description} <i class="fas fa-pencil-alt"></i></span>
+                            <Neos.Fusion.Form:Form
+                            form.target.action="editEntry"
+                            attributes.class="edit-menu-item-form"> 
+                                <div class="edit-menu-item-input">
+                                    <Neos.Fusion.Form:Textarea 
+                                    field.name="updateValue"
+                                    attributes.id="description">
+                                        {dish.description}
+                                    </Neos.Fusion.Form:Textarea>
+                                    <Neos.Fusion.Form:Hidden 
+                                        field.name="dish" 
+                                        field.value={dish} />
+                                    <Neos.Fusion.Form:Hidden 
+                                        field.name="updateName" 
+                                        field.value="description" />
+                                    <Neos.Fusion.Form:Button attributes.class="btn"><i class="far fa-save icon-white"></i></Neos.Fusion.Form:Button>
+                                    <div onclick="revertMenuItemChange(this)" class="btn btn-revert"><i class="fas fa-undo"></i></div>
+                                </div>
+                            </Neos.Fusion.Form:Form>
+                        </td>
+                        <td>
+                            <span onclick="openMenuItemChange(this)" title="" style="cursor:pointer;">{dish.price} <i class="fas fa-pencil-alt"></i></span>
+                            <Neos.Fusion.Form:Form
+                            form.target.action="editEntry"
+                            attributes.class="edit-menu-item-form"> 
+                                <div class="edit-menu-item-input">
+                                    <Neos.Fusion.Form:Input 
+                                        field.name="updateValue" 
+                                        field.value={dish.morepriceInfo}
+                                        attributes.id="price"	/>
+                                    <Neos.Fusion.Form:Hidden 
+                                        field.name="dish" 
+                                        field.value={dish} />
+                                    <Neos.Fusion.Form:Hidden 
+                                        field.name="updateName" 
+                                        field.value="price" />
+                                    <Neos.Fusion.Form:Button attributes.class="btn"><i class="far fa-save icon-white"></i></Neos.Fusion.Form:Button>
+                                    <div onclick="revertMenuItemChange(this)" class="btn btn-revert"><i class="fas fa-undo"></i></div>
+                                </div>
+                            </Neos.Fusion.Form:Form>
+                        </td>
+                        <td>
+                            <span onclick="openMenuItemChange(this)" title="" style="cursor:pointer;">{dish.category} <i class="fas fa-pencil-alt"></i></span>
+                            <Neos.Fusion.Form:Form
+                            form.target.action="editEntry"
+                            attributes.class="edit-menu-item-form"> 
+                                <div class="edit-menu-item-input">
+                                    <Neos.Fusion.Form:Select 
+                                        field.name="updateValue" 
+                                        attributes.id="category">
+                                        <Neos.Fusion.Form:Select.Option option.value="Vorspeise" >Vorspeise</Neos.Fusion.Form:Select.Option>
+                                        <Neos.Fusion.Form:Select.Option option.value="Hauptgerichte" >Hauptgerichte</Neos.Fusion.Form:Select.Option>
+                                    </Neos.Fusion.Form:Select>
+                                    <Neos.Fusion.Form:Hidden 
+                                        field.name="dish" 
+                                        field.value={dish} />
+                                    <Neos.Fusion.Form:Hidden 
+                                        field.name="updateName" 
+                                        field.value="category" />
+                                    <Neos.Fusion.Form:Button attributes.class="btn"><i class="far fa-save icon-white"></i></Neos.Fusion.Form:Button>
+                                    <div onclick="revertMenuItemChange(this)" class="btn btn-revert"><i class="fas fa-undo"></i></div>
+                                </div>
+                            </Neos.Fusion.Form:Form>
+                        </td>
+                        <td>
+                            <span onclick="openMenuItemChange(this)" title="" style="cursor:pointer;">[...] <i class="fas fa-pencil-alt"></i></span>
+                            <Neos.Fusion.Form:Form
+                            form.target.action="editEntry"
+                            attributes.class="edit-menu-item-form"> 
+                                <div class="edit-menu-item-input">
+                                    <Neos.Fusion.Form:Textarea 
+                                    field.name="updateValue" 
+                                    attributes.id="moreInfo">
+                                        {dish.moreInfo}
+                                    </Neos.Fusion.Form:Textarea>
+                                    <Neos.Fusion.Form:Hidden 
+                                        field.name="dish" 
+                                        field.value={dish} />
+                                    <Neos.Fusion.Form:Hidden 
+                                        field.name="updateName" 
+                                        field.value="moreInfo" />
+                                    <Neos.Fusion.Form:Button attributes.class="btn"><i class="far fa-save icon-white"></i></Neos.Fusion.Form:Button>
+                                    <div onclick="revertMenuItemChange(this)" class="btn btn-revert"><i class="fas fa-undo"></i></div>
+                                </div>
+                            </Neos.Fusion.Form:Form>
+                        </td>
+                        <td class="neos-action">
+                            <div class="neos-pull-right">
+                                <Neos.Fusion.Form:Form
+                                form.target.action="deleteEntry"
+                                attributes.class="delete-menu-item-form">
+                                    <Neos.Fusion.Form:Hidden 
+                                    field.name="dish" 
+                                    field.value={dish} />
+                                    <button class="neos-button neos-button-danger" title="Mit dieser Aktion löschen Sie das Gericht aus der Speisekarte. Die Aktion kann nicht rückgängig gemacht werden.">
+                                        <i class="fas fa-trash-alt icon-white"></i>
+                                    </button>
+                                    <!--<button class="neos-button neos-button-danger" onclick="openMenuItemDeleteModal('etrfhqentqentg')" title="Mit dieser Aktion löschen Sie das Gericht aus der Speisekarte. Die Aktion kann nicht rückgängig gemacht werden.">
+                                        <i class="fas fa-trash-alt icon-white"></i>
+                                    </button>-->	
+                                </Neos.Fusion.Form:Form>		
+                            </div>
+                        </td>
+                    </tr>
+                    </Neos.Fusion:Loop>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="open in" id="delete-menu-item-modal" aria-hidden="false">
+            <div class="neos-modal-centered">
+                <div class="neos-modal-content">
+                    <div class="neos-modal-header">
+                        <button onclick="closeMenuItemDeleteModal()" type="button" class="neos-close neos-button" data-dismiss="modal"></button>
+                        <div class="neos-header">Möchten Sie das Gericht wirklich löschen?</div>
+                        <div>
+                            <div class="neos-subheader">
+                                <p>
+                                    Das Gericht wird nicht mehr in der Speisekarte angezeigt.<br />
+                                    Diese Aktion kann nicht rückgängig gemacht werden.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="neos-modal-footer">
+                        <a href="#" class="neos-button" data-dismiss="modal" onclick="closeMenuItemDeleteModal()">Cancel</a>
+                        <button type="submit" class="neos-button neos-button-mini neos-button-danger">
+                            Ja, Gericht löschen
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="neos-modal-backdrop neos-in"></div>
+        </div>
+
+    `
+}

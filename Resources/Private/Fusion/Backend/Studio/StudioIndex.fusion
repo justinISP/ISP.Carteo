@@ -1,0 +1,22 @@
+ISP.Carteo.StudioController.index = Neos.Fusion:Component {
+
+    renderer = afx`
+
+        <Neos.Fusion:Loop itemName="menu" items={menus}>
+        
+            <Neos.Fusion.Form:Form
+            form.target.action="showMenu"
+            attributes.id="select-menu-form"
+            attributes.class="form">
+                <Neos.Fusion.Form:Hidden 
+                field.name="selectedNode" 
+                field.value={menu.identifier} />
+                <Neos.Fusion.Form:Button attributes.class="btn">
+                    {menu.properties.name}
+                </Neos.Fusion.Form:Button>
+            </Neos.Fusion.Form:Form>
+
+        </Neos.Fusion:Loop>
+
+    `
+}

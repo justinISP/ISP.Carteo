@@ -1,0 +1,44 @@
+ISP.Carteo.ManagerController.addMenuItem = Neos.Fusion:Component {
+
+    renderer = afx`
+
+    <Neos.Fusion.Form:Form
+    form.target.action="execAddMenuItem"
+    attributes.id="add-menu-item-form"
+    attributes.class="form">
+        <fieldset>  
+            <label for="name">Name</label>
+            <Neos.Fusion.Form:Input 
+                field.name="name" 
+                attributes.id="name"	/>
+            <label for="description">Beschreibung</label>
+            <Neos.Fusion.Form:Textarea 
+                field.name="description" 
+                attributes.id="description"	
+                attributes.rows="3"      />
+            <label for="price">Preis</label>
+            <Neos.Fusion.Form:Input 
+                field.name="price" 
+                attributes.id="price"	/>
+
+            <label for="category">>Menüpunkt</label>
+            <Neos.Fusion.Form:Select 
+                field.name="category" 
+                attributes.id="category"
+            >
+                <Neos.Fusion.Form:Select.Option option.value="Vorspeise" >Vorspeise</Neos.Fusion.Form:Select.Option>
+                <Neos.Fusion.Form:Select.Option option.value="Hauptgerichte" >Hauptgerichte</Neos.Fusion.Form:Select.Option>
+            </Neos.Fusion.Form:Select>
+            <label for="moreInfo">Weitere Informationen</label>
+            <Neos.Fusion.Form:Textarea 
+                field.name="moreInfo" 
+                attributes.id="moreInfo"	
+                attributes.rows="3"      />
+        </fieldset>
+        <div class="btn-align">
+            <Neos.Fusion.Form:Button attributes.class="btn">Anlegen</Neos.Fusion.Form:Button>
+        </div>
+    </Neos.Fusion.Form:Form>
+
+    `
+}

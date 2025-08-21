@@ -1,0 +1,54 @@
+'ISP.Carteo:Menu.Course':
+  superTypes:
+    'Neos.Neos:Content': true
+  childNodes:
+    courseItems:
+      type: 'Neos.Neos:ContentCollection'
+  ui:
+    label: Menüpunkt
+    group: carteo
+    position: 2
+    icon: icon-table
+    inspector:
+      groups:
+        general:
+          label: General
+          icon: 'icon-wrench'
+          position: 1100
+          collapsed: false
+  properties:
+    name:
+      type: string
+      defaultValue: ''
+      ui:
+        showInCreationDialog: true   
+        label: Name
+        reloadIfChanged: TRUE
+        inspector:
+          group: 'general'
+    direction:
+      type: string
+      defaultValue: right
+      ui:
+        showInCreationDialog: true    
+        reloadIfChanged: true  
+        label: 'Ausrichtung'
+        inspector:
+          group: 'general'
+          editor: 'Neos.Neos/Inspector/Editors/SelectBoxEditor'
+          editorOptions:
+            values:
+              right:
+                label: 'Bild rechts'
+                icon: 'icon-chevron-circle-right'
+              left:
+                label: 'Bild links'
+                icon: 'icon-chevron-circle-left'
+    pic:
+      type: Neos\Media\Domain\Model\ImageInterface
+      ui:
+        label: Foto
+        reloadIfChanged: TRUE
+        inspector:
+          group: 'general'
+          position: 0

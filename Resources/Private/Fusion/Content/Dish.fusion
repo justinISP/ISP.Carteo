@@ -1,0 +1,85 @@
+prototype(ISP.Carteo:Menu.Dish) < prototype(Neos.Neos:ContentComponent) {
+
+    inUse = ${q(documentNode).find('[instanceof ISP.Carteo:Menu.Dish]').get(0)}
+    
+    integration = ${'<style data-slipstream>' + ISP.Skeleton.Minify.minifyCSS(this.styles) + '</style>'}
+    integration.@if.willBeRendered = ${this.inUse == node}
+
+    styles = '
+    
+        .dish{
+            display:flex;
+            justify-content:space-between;
+            margin-bottom:12px;
+        }
+        
+        .dish .name p{
+            margin-bottom: 0;
+            font-size:22px;
+            padding-left: 15px;
+        }
+
+        .dish .price{
+            font-weight:bold;
+            white-space:nowrap;
+        }
+
+        .dish .price p{
+            font-size:22px;
+        }
+
+        .desc{
+            margin-left:0;
+            margin-right: 20px;
+        }
+        .desc p {
+            color: var(--primary-color);
+            padding-left: 15px;
+        }
+
+        .moreInfo{
+            margin-left:0;
+        }
+
+        .moreInfo p {
+        
+            padding-left: 15px;
+            
+        }
+
+    '
+
+    name = Neos.Neos:Editable {
+        property = 'name'
+    }
+    name.@process.convertUris = Neos.Neos:ConvertUris
+
+    description = Neos.Neos:Editable {
+        property = 'description'
+    }
+    description.@process.convertUris = Neos.Neos:ConvertUris
+
+    price = Neos.Neos:Editable {
+        property = 'price'
+    }
+    price.@process.convertUris = Neos.Neos:ConvertUris
+
+    moreInfo = Neos.Neos:Editable {
+        property = 'moreInfo'
+    }
+    moreInfo.@process.convertUris = Neos.Neos:ConvertUris
+
+    renderer = afx`
+        {props.integration}
+
+        <div class="dish">
+            <div>
+                <span class="name">{props.name}</span>
+                <div class="desc">{props.description}</div>
+                <div class="moreInfo">{props.moreInfo}</div>    
+            </div>
+            <span class="price">{props.price}</span>
+        </div>
+
+    `
+}

@@ -1,0 +1,15 @@
+privilegeTargets:
+  'Neos\Neos\Security\Authorization\Privilege\ModulePrivilege':
+    'ISP.Carteo:ManagerModule':
+      matcher: 'management/managerModule'
+    'ISP.Carteo:StudioModule':
+      matcher: 'management/studioModule'
+roles:
+  'Neos.Neos:Editor':
+    privileges:
+      -
+        privilegeTarget: 'ISP.Carteo:ManagerModule'
+        permission: GRANT
+      -
+        privilegeTarget: 'ISP.Carteo:StudioModule'
+        permission: GRANT
