@@ -152,7 +152,7 @@
               table: false
               a: true
               ol: false
-              ul: false
+              ul: true
               left: true
               center: true
               right: true
