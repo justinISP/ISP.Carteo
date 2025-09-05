@@ -11,6 +11,7 @@ prototype(ISP.Carteo:Menu.Course) < prototype(Neos.Neos:ContentComponent) {
         
             display:flex;
             gap: 40px;
+            padding: 20px 0;
 
         }
 
