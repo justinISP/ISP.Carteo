@@ -32,3 +32,10 @@ Neos:
                 - resource://ISP.Carteo/Public/JavaScript/backend.js              
               styleSheets:
                 - resource://ISP.Carteo/Public/Styles/backend.css
+ISP:
+  Carteo:
+    styling:
+      pdf:
+        css: 'resource://ISP.Carteo/Public/Styles/menuPdfStyling.css'
+        backgroundImage: 'resource://ISP.Carteo/Public/Images/menu-bg.png'
+        logo: 'resource://ISP.Carteo/Public/Images/carteo_logo.png'

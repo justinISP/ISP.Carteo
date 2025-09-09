@@ -16,6 +16,12 @@ class StudioController extends \Neos\Flow\Mvc\Controller\ActionController {
   	protected $resourceManager;
 
     /**
+  	* @Flow\Inject
+  	* @var Neos\Flow\Configuration\ConfigurationManager
+  	*/
+  	protected $configurationManager;
+
+    /**
 	* @Flow\Inject
 	* @var Neos\ContentRepository\Domain\Service\ContextFactoryInterface
 	*/
@@ -76,13 +82,23 @@ class StudioController extends \Neos\Flow\Mvc\Controller\ActionController {
 
     public function exportMenuAction(string $selectedNode) { 
 
-        $categories = $this->getSelectedMenu($selectedNode);
+        #$categories = $this->getSelectedMenu($selectedNode);
 
         $context = $this->contextFactory->create();
         $q = new FlowQuery([$context->getCurrentSiteNode()]);
 
+        $categories = $q->find('#' . $selectedNode)->children('menuItems')->children('[instanceof ISP.Carteo:Menu.Course]')->get();
+
         $menuNodeObj = $q->find('#' . $selectedNode)->get(0);
         $menuName = $menuNodeObj->getProperty('name');
+
+        $logoPath = $this->configurationManager->getConfiguration('Settings', 'ISP.Carteo.styling.pdf.logo');
+        $cssPath = $this->configurationManager->getConfiguration('Settings', 'ISP.Carteo.styling.pdf.css');
+        $bgImagePath = $this->configurationManager->getConfiguration('Settings', 'ISP.Carteo.styling.pdf.backgroundImage');
+
+        $cssPath = $this->resourceManager->getPackageAndPathByPublicPath($cssPath);
+        $bgImagePath = $this->resourceManager->getPackageAndPathByPublicPath($bgImagePath);
+        $logoPath = $this->resourceManager->getPackageAndPathByPublicPath($logoPath);
 
         $output = '
 
@@ -92,34 +108,69 @@ class StudioController extends \Neos\Flow\Mvc\Controller\ActionController {
                 <meta charset="utf-8" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <title>' . $menuName . '</title>
-                <link rel="stylesheet" href="' . $resourceUri = $this->resourceManager->getPublicPackageResourceUri('ISP.Carteo', 'Styles/menuPdfStyling.css') . '"></link>
+                <link rel="stylesheet" href="' . $resourceUri = $this->resourceManager->getPublicPackageResourceUri($cssPath[0], $cssPath[1]) . '"></link>
             </head>
-            <body style="background:url('. $resourceUri = $this->resourceManager->getPublicPackageResourceUri('ISP.Carteo', 'Images/menu-bg.png') . ');background-image-resize: 6;">
+            <body style="background:url('. $resourceUri = $this->resourceManager->getPublicPackageResourceUri($bgImagePath[0], $bgImagePath[1]) . ');background-image-resize: 6;">
                 <div class="container">
-                    <h1>' . $menuName . '</h1>
+                    <img style="text-align:center; height:50px;" src="' . $this->resourceManager->getPublicPackageResourceUri($logoPath[0], $logoPath[1]) . '" />
         ';
         foreach ($categories as $catName => $category) {
-            $output .= '<h2>' . $catName . '</h2>';
-            $output .= '<table class="menu">';
-            foreach ($category as $dish){
-                $output .= '
-                            <tr>
-                                <td class="title">' . $dish->getProperty('name') . '</td>
-                                <td class="price">' . $dish->getProperty('price') . '</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" class="desc">'. $dish->getProperty('description') . '</td>
-                            </tr>              
-                ';
+            $output .= '<h1>' . $category->getProperty('name') . '</h1>';
+            
+            $image = $category->getProperty('pic');
+            if($image != null){
+                $imageResource = $image->getResource();
+                $output .= '<p>' . $this->resourceManager->getPublicPersistentResourceUri($imageResource) . '</p>';
             }
-            $output .= '</table><pagebreak>';
-        }
+            
+            $output .= '<table class="menu">';
 
-        $output .= '
-        
+            $qCat = new FlowQuery([$category]);
+            $dishes = $qCat->children('courseItems')->children('[instanceof ISP.Carteo:Menu.Dish]')->get();
+
+            foreach ($dishes as $dish){
+
+                if(($dish->getProperty('name') != null) && ($dish->getProperty('description') != null)) {
+
+                    $output .= '
+                                <tr>
+                                    <td class="title">' . $dish->getProperty('name') . '</td>
+                                    <td class="price">' . $dish->getProperty('price') . '</td>
+                                </tr>
+                                <tr>
+                                    <td class="desc">'. $dish->getProperty('description') . '</td>
+                                    <td class="price">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                </tr>              
+                    ';
+
+                } elseif (($dish->getProperty('name') != null) && ($dish->getProperty('description') == null)) {
+                    
+                    $output .= '
+                                <tr>
+                                    <td class="title">' . $dish->getProperty('name') . '</td>
+                                    <td class="price">' . $dish->getProperty('price') . '</td>
+                                </tr>             
+                    ';
+
+                } else {
+
+                    $output .= '
+                                <tr>
+                                    <td class="desc">' . $dish->getProperty('description') . '</td>
+                                    <td class="price">' . $dish->getProperty('price') . '</td>
+                                </tr>
+                    ';
+
+                } 
+            }
+            $output .= '</table>
                     <footer>
                         Alle Preise in Euro inkl. MwSt. · Allergene & Zusatzstoffe auf Nachfrage.
                     </footer>
+            <pagebreak>';
+        }
+
+        $output .= '
                 </div>
             </body>
         </html>
