@@ -17,14 +17,13 @@ prototype(ISP.Carteo:Menu) < prototype(Neos.Neos:ContentComponent) {
     }
 
     name = ${q(node).property('name')}
-    showName = ${q(node).property('showName')}
 
     renderer = afx`
         {props.integration}
         <div class="menu-ct">
             
             <h2
-            @if.matches={props.showName == true}
+            @if.matches={node.context.inBackend == true}
             >{props.name}</h2>
 
             {props.menuItems}

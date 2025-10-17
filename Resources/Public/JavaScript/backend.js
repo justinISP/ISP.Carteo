@@ -32,3 +32,19 @@ function revertMenuItemChange(btn){
     form.style.display = "none";
 
 }
+
+function openMenuExportModal(){
+
+    modal = document.querySelector('#export-menu-modal');
+
+    modal.style.display = "block";
+
+}
+
+function closeMenuExportModal(){
+
+    modal = document.querySelector('#export-menu-modal');
+
+    modal.style.display = "block";
+
+}

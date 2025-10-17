@@ -3,26 +3,17 @@ ISP.Carteo.StudioController.showMenu = Neos.Fusion:Component {
     renderer = afx`
 
         <div class="neos-row-fluid">
-            <div style="display:flex; width: 100%; padding-bottom: 20px !important;justify-content: space-between;    align-items: center;">
-                <p style="font-size: 20px !important; font-weight: bold;">{menuName}</p>
+            <div style="display:flex; width: 100%;justify-content: space-between;    align-items: center;">
+                <p style="font-size: 30px !important; font-weight: bold;">{menuName}</p>
                 <div style="display: flex; gap:10px;">
-<!--                    <Neos.Neos:NodeLink node={menuNodeObj} class="neos-button">
-                        <i style="margin-right: 10px;" class="fas fa-pen icon-white"></i>Speisekarte bearbeiten
-                    </Neos.Neos:NodeLink> -->
-                    <Neos.Fusion.Form:Form
-                    form.target.action="exportMenu"
-                    attributes.id="export-menu-form">
-                    <Neos.Fusion.Form:Hidden 
-                        field.name="selectedNode" 
-                        field.value={selectedNode} />
-                        <div class="btn-align">
-                            <Neos.Fusion.Form:Button attributes.class="btn"><i style="margin-right: 10px;" class="fas fa-download icon-white"></i>Speisekarte als PDF exportieren</Neos.Fusion.Form:Button>
-                        </div>
-                    </Neos.Fusion.Form:Form>
+                    <div class="btn-align">
+                        <Neos.Fusion.Form:Button attributes.onclick="openMenuExportModal()" attributes.class="btn"><i style="margin-right: 10px;" class="fas fa-download icon-white"></i>Speisekarte als PDF exportieren</Neos.Fusion.Form:Button>
+                    </div>
                 </div>
             </div>
+
             <Neos.Fusion:Loop itemKey="catName" itemName="category" items={categories}>
-                <p>{catName}</p>
+                <p style="font-size: 20px !important; font-weight: bold; padding: 10px 0 !important;">{catName}</p>
                 <table class="neos-table nb-menu-table">
                     <thead>
                         <tr>
@@ -50,6 +41,40 @@ ISP.Carteo.StudioController.showMenu = Neos.Fusion:Component {
             </Neos.Fusion:Loop>
         </div>
 
+        <div class="open in" id="export-menu-modal" aria-hidden="false">
+            <div class="neos-modal-centered">
+                <div class="neos-modal-content">
+                    <div class="neos-modal-header">
+                        <button onclick="closeMenuExportModal()" type="button" class="neos-close neos-button" data-dismiss="modal"></button>
+                        <div class="neos-header">Wie soll die Speisekarte exportiert werden?</div>
+                    </div>
+                    <div class="neos-modal-footer">
+                        <Neos.Fusion.Form:Form
+                        form.target.action="portraitExport"
+                        attributes.id="export-menu-form">
+                        <Neos.Fusion.Form:Hidden 
+                            field.name="selectedNode" 
+                            field.value={selectedNode} />
+                            <div class="btn-align">
+                                <Neos.Fusion.Form:Button attributes.class="btn"><i style="margin-right: 10px;" class="fas fa-up-down icon-white"></i>Hochkant</Neos.Fusion.Form:Button>
+                            </div>
+                        </Neos.Fusion.Form:Form>
+                        
+                        <Neos.Fusion.Form:Form
+                        form.target.action="landscapeExport"
+                        attributes.id="export-menu-form">
+                        <Neos.Fusion.Form:Hidden 
+                            field.name="selectedNode" 
+                            field.value={selectedNode} />
+                            <div class="btn-align">
+                                <Neos.Fusion.Form:Button attributes.class="btn"><i style="margin-right: 10px;" class="fas fa-left-right icon-white"></i>Querformat</Neos.Fusion.Form:Button>
+                            </div>
+                        </Neos.Fusion.Form:Form>
+                    </div>
+                </div>
+            </div>
+            <div class="neos-modal-backdrop neos-in"></div>
+        </div>
 
     `
 }
