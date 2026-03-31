@@ -1,0 +1,74 @@
+ISP.Carteo.OrderController.listOld = Neos.Fusion:Component {
+
+    renderer = afx`
+
+        <div class="order-old-container order-container">
+            <h1>Bestellübersicht</h1>
+            <Neos.Fusion:Loop itemName="order" items={orders}>
+                <div id="order-card" class="order-card">
+                    <div class="order-header" onclick="toggleData()">
+                        <svg id="order-arrow" width="20px" height="20px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free v7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path fill="rgb(255, 255, 255)" d="M297.4 566.6C309.9 579.1 330.2 579.1 342.7 566.6L502.7 406.6C515.2 394.1 515.2 373.8 502.7 361.3C490.2 348.8 469.9 348.8 457.4 361.3L352 466.7L352 96C352 78.3 337.7 64 320 64C302.3 64 288 78.3 288 96L288 466.7L182.6 361.3C170.1 348.8 149.8 348.8 137.3 361.3C124.8 373.8 124.8 394.1 137.3 406.6L297.3 566.6z"/></svg>
+                        <div class="name">{order.customerName}</div>
+                        <div class="datetime">
+                            <div class="date">Bestellt am {Date.format(order.created, "d.m.Y")}</div>
+                            <div class="time">Abholzeit: {order.pickupTime} Uhr</div>
+                        </div>
+                    </div>
+
+                    <div class="message">{order.message}</div>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Anzahl</th>
+                                <th>Gericht</th>
+                                <th class="price">Preis</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <Neos.Fusion:Loop itemName="item" items={order.items}>
+                                <tr>
+                                    <td>{item.qty}</td>
+                                    <td>{item.name}</td>
+                                    <td class="price">{item.sumFormatted} €</td>
+                                </tr>
+                            </Neos.Fusion:Loop>
+                        </tbody>
+                    </table>
+
+                    <div class="total">Gesamt: {order.totalFormatted} €</div>
+                
+                    <div class="btn-container">
+                        <div class="btn-container-action">
+                            <Neos.Fusion:Link.Action 
+                            class="neos-button neos-button-primary" 
+                            href.package="ISP.Carteo" 
+                            href.controller="Order" 
+                            href.action="open" 
+                            href.arguments.order={order.orderObj}>
+                                <i class="fas fa-check"></i> Wiederherstellen
+                            </Neos.Fusion:Link.Action>
+
+                            <Neos.Fusion:Link.Action 
+                            class="neos-button neos-button-danger" 
+                            href.package="ISP.Carteo" 
+                            href.controller="Order" 
+                            href.action="delete" 
+                            href.arguments.order={order.orderObj}>
+                                <i class="fas fa-trash-alt"></i> Löschen
+                            </Neos.Fusion:Link.Action>
+                            
+                        </div>
+                    </div>
+                </div>
+            </Neos.Fusion:Loop>
+        </div>
+
+
+        <div 
+        @if.has={!orders}>
+            <p>Keine Bestellung vorhanden</p>    
+        </div>
+
+    `
+}

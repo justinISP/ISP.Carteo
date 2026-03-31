@@ -1,6 +1,7 @@
 body{
     margin:0;
     padding:40px;
+    background:#E1E1E1;
     color:#212121;
     font-size:16px;
     line-height:1.6;
@@ -21,53 +22,12 @@ h1{
 }
 
 h2{
-    font-size:30px;
+    border-bottom:2px solid #942A2C;
+    padding-bottom:6px;
+    margin-top:40px;
+    font-size:24px;
     color:#942A2C;
     font-family:"playfairDisplay";
-}
-
-td {
-    padding-bottom: 5mm;
-}
-
-.course-header{
-
-    padding-top: 10mm;
-
-}
-
-.category-table-image{
-
-    width:25%; 
-    text-align:left;
-
-}
-
-.category-table-content{
-
-    width:75%; 
-    padding-left:8mm; 
-    padding-right:10mm;
-    vertical-align: top;
-
-}
-
-.dish-table{
-
-    padding-top: 5mm;
-
-}
-
-.dish-price{
-
-    vertical-align: top;
-    text-align: right;
-    font-size: 20px;
-
-}
-
-.dish-name{
-    font-size: 20px;
 }
 
 .menu{
@@ -95,22 +55,13 @@ td {
 }
 
 
-.description{
+.desc{
     font-size:14px;
-    margin-bottom: 5mm;
-    color:#942A2C; 
-}
-
-.moreInfo{
-
-    font-size:12px;
-    margin-bottom: 5mm;
-    color:black; 
-
+    color:#444; 
 }
 
 
-tfoot{
+footer{
     text-align:center;
     margin-top:60px;
     font-size:13px;

@@ -1,9 +1,13 @@
 privilegeTargets:
   'Neos\Neos\Security\Authorization\Privilege\ModulePrivilege':
     'ISP.Carteo:ManagerModule':
-      matcher: 'management/managerModule'
+      matcher: 'isp-carteo/managerModule'
     'ISP.Carteo:StudioModule':
-      matcher: 'management/studioModule'
+      matcher: 'isp-carteo/studioModule'
+    'ISP.Carteo:OrderModule':
+      matcher: 'isp-carteo/orderModule'
+    'ISP.Carteo:OverviewModule':
+      matcher: 'isp-carteo'
 roles:
   'Neos.Neos:Editor':
     privileges:
@@ -12,4 +16,15 @@ roles:
         permission: GRANT
       -
         privilegeTarget: 'ISP.Carteo:StudioModule'
+        permission: GRANT
+      -
+        privilegeTarget: 'ISP.Carteo:OrderModule'
+        permission: GRANT
+      -
+        privilegeTarget: 'ISP.Carteo:OverviewModule'
+        permission: GRANT
+  'Neos.Flow:Everybody':
+    privileges:
+      -
+        privilegeTarget: 'ISP.Carteo:OrderModule'
         permission: GRANT

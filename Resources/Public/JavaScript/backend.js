@@ -33,18 +33,64 @@ function revertMenuItemChange(btn){
 
 }
 
-function openMenuExportModal(){
+function normalizePhoneNumber(input) {
+    if (!input) return null;
 
-    modal = document.querySelector('#export-menu-modal');
+    let number = input.replace(/\D/g, "");
 
-    modal.style.display = "block";
+    if (number.startsWith("0049")) {
+        number = number.slice(2);
+    }
+
+    if (number.startsWith("0")) {
+        number = "49" + number.slice(1);
+    }
+
+    else if (number.startsWith("49")) {}
+
+    else {
+        number = "49" + number;
+    }
+
+    return number;
+}
+
+function sendAccept(btn) {
+
+    const pickupTime = btn.dataset.pickuptime;
+
+    let text = `Vielen Dank für Ihre Bestellung,%0A%0A diese kann um ${pickupTime} Uhr bei uns im Ratskeller Altenburg abgeholt werden.`;
+
+    const dataPhone = btn.dataset.customerphone;
+
+    phoneTo = normalizePhoneNumber(dataPhone);
+
+    const url = `https://wa.me/${phoneTo}?text=${text}`;
+
+    window.open(url, '_blank');
 
 }
 
-function closeMenuExportModal(){
+function sendDecline(btn) {
 
-    modal = document.querySelector('#export-menu-modal');
+    let text = `Vielen Dank für Ihre Bestellung,%0A%0A leider müssen wir Ihnen mitteilen, dass wir Ihre Bestellung stornieren.`;
 
-    modal.style.display = "block";
+    const dataPhone = btn.dataset.customerphone;
+
+    phoneTo = normalizePhoneNumber(dataPhone);
+
+    const url = `https://wa.me/${phoneTo}?text=${text}`;
+
+    window.open(url, '_blank');
+
+}
+
+function toggleData(){
+
+    card = document.querySelector('#order-card');
+    arrow = document.querySelector('#order-arrow');
+
+    arrow.classList.toggle('rotate');
+    card.classList.toggle('open');
 
 }

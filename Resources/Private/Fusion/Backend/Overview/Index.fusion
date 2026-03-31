@@ -1,0 +1,46 @@
+ISP.Carteo.OverviewController.index = Neos.Fusion:Component {
+
+    renderer = afx`
+
+    <Layout name="BackendModule" />
+
+    <Section name="content">
+        {props.moduleConfiguration.submodules ? (
+            <div class="neos-row-fluid">
+                {Object.values(props.moduleConfiguration.submodules).map((submoduleConfiguration, index) => {
+                    const submoduleIdentifier = Object.keys(props.moduleConfiguration.submodules)[index];
+                    const iterator = {
+                        cycle: index + 1,
+                        isLast: index === Object.keys(props.moduleConfiguration.submodules).length - 1
+                    };
+
+                    return (
+                        <Neos.Backend:IfModuleAccessible
+                            modulePath={props.moduleConfiguration.path + '/' + submoduleIdentifier}
+                            moduleConfiguration={submoduleConfiguration}
+                        >
+                            <div class="neos-span4">
+                                <Neos.Fusion:Template
+                                    path={
+                                        submoduleConfiguration.widgetTemplatePathAndFileName
+                                            ? submoduleConfiguration.widgetTemplatePathAndFileName
+                                            : props.neosSettings.moduleConfiguration.widgetTemplatePathAndFileName
+                                    }
+                                    moduleConfiguration={props.moduleConfiguration}
+                                    submoduleIdentifier={submoduleIdentifier}
+                                    submoduleConfiguration={submoduleConfiguration}
+                                />
+                            </div>
+
+                            {iterator.cycle % 3 === 0 && !iterator.isLast ? (
+                                </div><div class="neos-row-fluid">
+                            ) : null}
+                        </Neos.Backend:IfModuleAccessible>
+                    );
+                })}
+            </div>
+        ) : null}
+    </Section>
+
+    `
+}

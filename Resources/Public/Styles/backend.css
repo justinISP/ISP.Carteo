@@ -1,4 +1,4 @@
-#delete-menu-item-modal, #export-menu-modal {
+#delete-menu-item-modal{
 
     display: none;
 
@@ -67,5 +67,156 @@
 .nb-menu-table td {
 
     padding: 10px 16px !important;
+
+}
+
+.action-link {
+
+    background-color: #3f3f3f;
+    padding: 20px !important;
+
+}
+
+.action-link:hover{
+
+    background-color: #00b5ff;
+
+}
+
+.action-link:hover{
+
+    color: #fff !important;
+
+}
+
+.order-container {
+    max-width: 900px;
+    margin: auto !important;
+}
+
+.order-container h1 {
+    text-align: center;
+    margin-bottom: 30px !important;
+    font-size: 40px !important;
+}
+
+.order-card {
+    background: #323232;
+    margin-bottom: 20px !important;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+}
+
+.order-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px !important;
+    border: 1px solid #222222;
+}
+
+.order-container .name {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.order-container .time {
+    color: #00b5ff;
+}
+
+.order-container .message {
+    border: 1px solid #222222;
+    padding: 20px 40px !important;
+    font-size: 14px;
+    font-style: italic;
+}
+
+.order-container table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #222222;
+}
+
+.order-container th, td {
+    padding: 8px 20px !important;
+    text-align: left;
+}
+
+.order-container th {
+    color: #00b5ff;
+    font-weight: 500;
+    font-size: 13px;
+}
+
+.order-container .total {
+    text-align: right;
+    font-weight: bold;
+    font-size: 16px;
+    padding: 20px !important;
+    border: 1px solid #222222;
+}
+
+.order-container .price {
+    text-align: right;
+}
+
+.order-container .btn-container{
+
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 40px !important;
+
+}
+
+.order-container .btn-container-whatsapp, .order-container .btn-container-action {
+
+    display: flex;
+    gap: 10px;
+
+}
+
+.order-old-container .btn-container{
+
+    justify-content: flex-end;
+    padding-top: 20px !important;
+    background-color: #222222;
+
+}
+
+.order-old-container .order-card > * {
+
+    display: none;
+
+}
+
+.order-old-container .order-card .order-header {
+
+    display: flex !important;
+    cursor: pointer;
+
+}
+
+.order-old-container .order-card.open > * {
+
+    display: block;
+
+}
+
+.order-old-container .order-card.open > .btn-container {
+
+    display: flex;
+
+}
+
+.order-old-container #order-arrow {
+
+    transition: .3s all ease;
+
+}
+
+.order-old-container #order-arrow.rotate {
+
+    -webkit-transform: rotate(-180deg);
+    -ms-transform: rotate(-180deg);
+    transform: rotate(-180deg);
 
 }

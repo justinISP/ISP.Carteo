@@ -1,0 +1,7 @@
+-
+  name: 'Order API'
+  uriPattern: 'api/order'
+  defaults:
+    '@package': 'ISP.Carteo'
+    '@controller': 'Order'
+    '@action': 'submit'

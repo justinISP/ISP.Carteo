@@ -8,17 +8,12 @@
     label: Speisekarte
     group: carteo
     position: 1
-    icon: icon-clipboard-list
+    icon: icon-table
     inspector:
       groups:
         general:
           label: General
           icon: 'icon-wrench'
-          position: 1100
-          collapsed: false
-        offering:
-          label: Optionen für Angebotskarte
-          icon: 'icon-picture'
           position: 1100
           collapsed: false
   properties:
@@ -31,40 +26,3 @@
         reloadIfChanged: TRUE
         inspector:
           group: 'general'
-    offering:
-      type: boolean
-      defaultValue: false
-      ui:
-        showInCreationDialog: true   
-        label: Angebotskarte
-        reloadIfChanged: TRUE
-        inspector:
-          group: 'general'
-    teaser:
-      type: string
-      defaultValue: ''
-      ui:
-        label: Cover-Text
-        reloadIfChanged: TRUE
-        inspector:
-          hidden: 'ClientEval:node.properties.offering ? false : true'
-          group: 'offering'
-          position: 1
-    teaserPic:
-      type: Neos\Media\Domain\Model\ImageInterface
-      ui:
-        label: Cover-Bild
-        reloadIfChanged: TRUE
-        inspector:
-          hidden: 'ClientEval:node.properties.offering ? false : true'
-          group: 'offering'
-          position: 2
-    pic:
-      type: Neos\Media\Domain\Model\ImageInterface
-      ui:
-        label: Bild neben dem Menu
-        reloadIfChanged: TRUE
-        inspector:
-          hidden: 'ClientEval:node.properties.offering ? false : true'
-          group: 'offering'
-          position: 3

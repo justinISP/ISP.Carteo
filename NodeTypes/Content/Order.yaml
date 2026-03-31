@@ -1,0 +1,152 @@
+'ISP.Carteo:Menu.Order':
+  superTypes:
+    'Neos.Neos:Content': true
+  ui:
+    label: 'Bestellformular'
+    icon: money-bill
+    group: carteo
+    position: 1
+    inspector:
+      groups:
+        general:
+          label: General
+          icon: 'icon-wrench'
+          position: 1100
+          collapsed: false
+  properties:
+    menu:
+      type: reference
+      ui:
+        label: 'Speisekarte auswählen'
+        reloadIfChanged: true
+        inspector:
+          group: 'general'
+          editor: 'Neos.Neos/Inspector/Editors/SelectBoxEditor'
+          editorOptions:
+            placeholder: hier wählen ...
+            dataSourceIdentifier: 'isp-carteo-menus'
+    followUp:
+      type: string
+      ui:
+        label: 'FollowUp Seite auswählen'
+        reloadIfChanged: true
+        inspector:
+          group: 'general'
+          editor: 'Neos.Neos/Inspector/Editors/LinkEditor'
+    title:
+      type: string
+      defaultValue: ''
+      ui:
+        inlineEditable: true
+        inline:
+          editorOptions:
+            linking:
+              anchorLink: true
+            inlineStyling:
+              fontSize: true
+              fontColor: true
+            formatting:
+              strong: true
+              em: true
+              sub: true
+              sup: true
+              p: true
+              h1: true
+              h2: true
+              h3: true
+              h4: true
+              h5: false
+              h6: false
+              code: false
+              pre: true
+              removeFormat: true
+              table: false
+              a: true
+              ol: false
+              ul: false
+              left: true
+              center: true
+              right: true
+              justify: true
+              underline: false
+              strikethrough: false
+              blockquote: true
+            autoparagraph: true
+            placeholder: Titel hier eintragen ...
+    notice:
+      type: string
+      defaultValue: ''
+      ui:
+        inlineEditable: true
+        inline:
+          editorOptions:
+            linking:
+              anchorLink: true
+            inlineStyling:
+              fontSize: true
+              fontColor: true
+            formatting:
+              strong: true
+              em: true
+              sub: true
+              sup: true
+              p: true
+              h1: true
+              h2: true
+              h3: true
+              h4: true
+              h5: false
+              h6: false
+              code: false
+              pre: true
+              removeFormat: true
+              table: false
+              a: true
+              ol: false
+              ul: false
+              left: true
+              center: true
+              right: true
+              justify: true
+              underline: false
+              strikethrough: false
+              blockquote: true
+            autoparagraph: true
+            placeholder: Weitere Informationen hier eintragen ...
+    phone:
+      type: string
+      defaultValue: ''
+      ui:
+        inlineEditable: true
+        inline:
+          editorOptions:
+            linking:
+              anchorLink: false
+            formatting:
+              strong: false
+              em: false
+              sub: false
+              sup: false
+              p: true
+              h1: false
+              h2: false
+              h3: false
+              h4: false
+              h5: false
+              h6: false
+              code: false
+              pre: false
+              removeFormat: false
+              table: false
+              a: true
+              ol: false
+              ul: false
+              left: false
+              center: false
+              right: false
+              justify: false
+              underline: false
+              strikethrough: false
+              blockquote: false
+            autoparagraph: false
+            placeholder: +49123456789 hier eintragen ...

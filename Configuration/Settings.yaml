@@ -2,7 +2,10 @@ Neos:
   Neos:    
     fusion:
       autoInclude:
-        'ISP.Carteo': true         
+        'ISP.Carteo': true  
+    dataSources:
+      isp-carteo-menus:
+        className: ISP\Carteo\DataSources\MenuDataSource       
     nodeTypes:
       groups:
         carteo:
@@ -10,13 +13,19 @@ Neos:
           label: 'Carteo'
           collapsed: true
     modules:
-      'management':
+
+    modules:
+      isp-carteo:
+        label: 'Carteo'
+        controller: 'ISP\Carteo\Controller\OverviewController'
+        description: 'Moderne Menüverwaltung'
+        icon: icon-clipboard-list
         submodules:
           'managerModule':
             label: 'Carteo Manager'
             controller: 'ISP\Carteo\Controller\ManagerController'
             description: 'Mit diesem Modul kann die Speisekarte aktualisiert und exportiert werden.'
-            icon: icon-clipboard-list
+            icon: icon-list
             additionalResources:
               javaScripts:
                 - resource://ISP.Carteo/Public/JavaScript/backend.js              
@@ -26,7 +35,17 @@ Neos:
             label: 'Carteo Studio'
             controller: 'ISP\Carteo\Controller\StudioController'
             description: 'Mit diesem Modul kann die Speisekarte aktualisiert und exportiert werden.'
-            icon: icon-clipboard-list
+            icon: icon-print
+            additionalResources:
+              javaScripts:
+                - resource://ISP.Carteo/Public/JavaScript/backend.js              
+              styleSheets:
+                - resource://ISP.Carteo/Public/Styles/backend.css
+          'orderModule':
+            label: 'Bestellübersicht'
+            controller: 'ISP\Carteo\Controller\OrderController'
+            description: 'Mit diesem Modul können Bestellungen eingesehen und verwaltet werden.'
+            icon: icon-euro-sign
             additionalResources:
               javaScripts:
                 - resource://ISP.Carteo/Public/JavaScript/backend.js              

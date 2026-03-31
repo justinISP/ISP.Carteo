@@ -1,0 +1,15 @@
+ISP.Carteo.OrderController.index = Neos.Fusion:Component {
+
+    renderer = afx`
+
+        <div style="display:flex;justify-content: center;align-items: center; gap:100px;">
+            <Neos.Fusion:Link.Action class="action-link" href.package="ISP.Carteo" href.controller="Order" href.action="listNew">
+                Neue Bestellungen
+            </Neos.Fusion:Link.Action>
+            <Neos.Fusion:Link.Action class="action-link" href.package="ISP.Carteo" href.controller="Order" href.action="listOld">
+                Vergangene Bestellungen
+            </Neos.Fusion:Link.Action>
+        </div>
+
+    `
+}

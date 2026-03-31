@@ -1,0 +1,118 @@
+prototype(ISP.Carteo:Menu.Order) < prototype(Neos.Neos:ContentComponent) {
+    
+    integration = ${'<style data-slipstream>' + ISP.Skeleton.Minify.minifyCSS(this.styles) + '</style>'}
+
+    styles = '
+    
+        .online-order {
+        
+            display:flex;
+        
+        }
+
+        .order-menu {
+        
+            flex: 0 0 60%;
+
+        }
+
+        .order-panel {
+        
+            flex: 0 0 40%;
+
+        }
+
+    '
+
+    @context.menu = ${q(node).property('menu')}
+
+    courses = Neos.Fusion:Map {
+
+        items = ${q(menu).children('menuItems').children('[instanceof ISP.Carteo:Menu.Course]').get()}
+        itemName = 'course'
+        keyRenderer = ${q(course).property('name')}
+        itemRenderer = Neos.Fusion:Map {
+
+            items = ${q(course).children('courseItems').children('[instanceof ISP.Carteo:Menu.Dish]').get()}
+            itemName = 'dish'
+            itemRenderer = ${dish}
+
+        }
+
+    }
+
+    title = Neos.Neos:Editable {
+        property = 'title'
+    }
+    title.@process.convertUris = Neos.Neos:ConvertUris
+
+    notice = Neos.Neos:Editable {
+        property = 'notice'
+    }
+    notice.@process.convertUris = Neos.Neos:ConvertUris
+
+    phone = Neos.Neos:Editable {
+        property = 'phone'
+    }
+    phone.@process.convertUris = Neos.Neos:ConvertUris
+
+    followUp = ${q(node).property('followUp')}
+    followUp.@process.convertUris = Neos.Neos:ConvertUris
+
+    renderer = afx`
+        {props.integration}
+
+        <div class="online-order">
+            <main class="order-menu">
+                <ul>
+                    <Neos.Fusion:Loop items={props.courses} itemName="course" itemKey="courseName">
+                        <li>
+                            <h3>{courseName}</h3>
+                            <ul>
+                                <Neos.Fusion:Loop items={course} itemName="dish">
+                                    <li>{dish.properties.name}</li>
+                                    <button 
+                                    class="add-to-cart"
+                                    data-id={dish.name}
+                                    data-name={String.replace(dish.properties.name, ["<p>", "</p>"], ["", ""])}
+                                    data-price={String.replace(dish.properties.price, ["<p>", "</p>", "€", " ", ","], ["", "", "", "", "."])}>
+                                        In den Warenkorb
+                                    </button>
+                                </Neos.Fusion:Loop>
+                            </ul>
+                        </li>
+                    </Neos.Fusion:Loop>
+                </ul>
+            </main>
+            <aside class="order-panel">
+                <div class="cart" id="cartPanel">
+                    <h4>🛒 {props.title}</h4>
+                    <div class="cart-list" id="cartList"></div>
+                    <div class="total">
+                        <div>Gesamt</div>
+                            <div id="totalPrice"></div>
+                    </div>
+                    
+                    <div style="display:flex;gap:8px;margin-top:12px">
+                        <input id="custName" placeholder="Ihr Name" style="flex:1;padding:8px;border-radius:8px;border:1px solid #eaeaea"></input>
+                    </div>
+                    <div style="display:flex;gap:8px;margin-top:12px">
+                        <input id="phone" placeholder="Telefon" style="flex:1;padding:8px;border-radius:8px;border:1px solid #eaeaea"></input>
+                    </div>
+                    <div style="display:flex;gap:8px;margin-top:8px">
+                        <input id="pickupTime" type="time" style="flex:1;padding:8px;border-radius:8px;border:1px solid #eaeaea" min="12:00" max="22:00"></input>
+                    </div>
+                    <div style="margin-top:8px">
+                        <textarea id="custMessage" placeholder="Kurze Nachricht (optional), z.B. 'Bitte etwas mehr Soße'" rows="2" style="width:100%; padding:8px; border-radius:8px; border:1px solid #eaeaea; box-sizing: border-box;"></textarea>
+                    </div>
+                    
+                    <div class="note">{props.notice}</div>
+                        <button class="whatsapp-btn" onclick="sendWhatsApp()" data-followUp={props.followUp}>Per WhatsApp bestellen</button>
+                    <div style="margin-top:8px;font-size:12px;color:var(--muted)">WhatsApp-Nummer: {props.phone}</div>
+                </div>
+            </aside>
+        </div>
+
+    `
+
+}
