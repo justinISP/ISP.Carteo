@@ -245,7 +245,7 @@ class OrderController extends \Neos\Flow\Mvc\Controller\ActionController {
 
         foreach ($order['cart'] as $item) {
 
-            $dishQ = $q->find("[instanceof ISP.Carteo:Menu.Dish][name*=~" . $item['name'] . "]")->get(0);
+            $dishQ = $q->find("[instanceof ISP.Carteo:Menu.Dish][name*=~'" . $item['name'] . "']")->get(0);
 
             if (!$dishQ) continue;
 
