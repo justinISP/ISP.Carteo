@@ -243,6 +243,8 @@ class OrderController extends \Neos\Flow\Mvc\Controller\ActionController {
         $newOrder->setCreated($order['receiveDate']);
         $newOrder->setClosed(0);
 
+		$context = $this->contextFactory->create();
+        $q = new FlowQuery([$context->getCurrentSiteNode()]);
         foreach ($order['cart'] as $item) {
 
             $dishQ = $q->find("[instanceof ISP.Carteo:Menu.Dish][name*=~'" . $item['name'] . "']")->get(0);
