@@ -11,7 +11,7 @@
   httpMethods: ['GET']
   defaults:
     '@package':    'ISP.Carteo'
-    '@controller': 'Webhook'
+    '@controller': 'Order'
     '@action':     'verify'
     '@format':     'json'
 
@@ -21,6 +21,6 @@
   httpMethods: ['POST']
   defaults:
     '@package':    'ISP.Carteo'
-    '@controller': 'Webhook'
+    '@controller': 'Order'
     '@action':     'receive'
     '@format':     'json'
