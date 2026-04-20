@@ -229,12 +229,12 @@ class OrderController extends \Neos\Flow\Mvc\Controller\ActionController {
 
         $order = $this->parseWhatsAppOrder($rawBody);
 
-        if (empty($order)) {
+        if (empty($order) || $this->orderRepository->findOneByMessageId($order['msgId'])) {
             $this->response->setStatusCode(200);
             $this->view->assign('value', ['status' => 'ok']);
             return;
         }
-
+		
         $newOrder = new Order();
         $newOrder->setCustomerName($order['name']);
         $newOrder->setCustomerPhone($order['phone']);
@@ -242,6 +242,7 @@ class OrderController extends \Neos\Flow\Mvc\Controller\ActionController {
         $newOrder->setMessage($order['message']);
         $newOrder->setCreated($order['receiveDate']);
         $newOrder->setClosed(0);
+		$newOrder->setMessageId($order['msgId']);
 
 		$context = $this->contextFactory->create();
         $q = new FlowQuery([$context->getCurrentSiteNode()]);
@@ -284,6 +285,7 @@ class OrderController extends \Neos\Flow\Mvc\Controller\ActionController {
 
         $text   = $msg['text']['body'];
         $result = [
+			'msgId'       => $msg['id'],
             'phone'       => $msg['from'],
             'receiveDate' => (new \DateTime())->setTimestamp((int)$msg['timestamp']),
             'name'        => '',
