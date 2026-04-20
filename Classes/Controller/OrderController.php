@@ -8,6 +8,7 @@ use Neos\Eel\FlowQuery\FlowQuery;
 use Neos\ContentRepository\Domain\Model\Node;
 use ISP\Carteo\Domain\Model\Order;
 use ISP\Carteo\Domain\Repository\OrderRepository;
+use Neos\Flow\Mvc\View\JsonView;
 
 class OrderController extends \Neos\Flow\Mvc\Controller\ActionController {
 
@@ -195,6 +196,123 @@ class OrderController extends \Neos\Flow\Mvc\Controller\ActionController {
         $this->persistenceManager->persistAll();
 
         return json_encode(['status' => 'ok']);
+    }
+
+    /**
+     * Meta verifies webhook
+     */
+    public function verifyAction(): void
+    {
+        $verifyToken = '98177c25dff95b149249329148e028457ff7bc1aceb96fe6287b62d24e75a95f'; // selbst gewählt, gleicher Wert wie in Meta
+
+        $mode      = $this->request->getArgument('hub_mode');
+        $token     = $this->request->getArgument('hub_verify_token');
+        $challenge = $this->request->getArgument('hub_challenge');
+
+        if ($mode === 'subscribe' && $token === $verifyToken) {
+            $this->response->setStatusCode(200);
+            $this->response->setContent($challenge);
+        } else {
+            $this->response->setStatusCode(403);
+        }
+
+        throw new \Neos\Flow\Mvc\Exception\StopActionException();
+    }
+
+    /**
+     * Meta sending WhatsApp orders
+     */
+    public function receiveAction(): void
+    {
+        $rawBody = file_get_contents('php://input');
+        $this->verifyMetaSignature($rawBody);
+
+        $order = $this->parseWhatsAppOrder($rawBody);
+
+        if (empty($order)) {
+            $this->response->setStatusCode(200);
+            $this->view->assign('value', ['status' => 'ok']);
+            return;
+        }
+
+        $newOrder = new Order();
+        $newOrder->setCustomerName($order['name']);
+        $newOrder->setCustomerPhone($order['phone']);
+        $newOrder->setPickupTime($order['pickupTime']);
+        $newOrder->setMessage($order['message']);
+        $newOrder->setCreated($order['receiveDate']);
+        $newOrder->setClosed(0);
+
+        foreach ($order['cart'] as $item) {
+
+            $dishQ = $q->find("[instanceof ISP.Carteo:Menu.Dish][name*=~" . $item['name'] . "]")->get(0);
+
+            if (!$dishQ) continue;
+
+            $rawPrice = $dishQ->getProperty('price');
+            $price = strip_tags($rawPrice);
+            $price = str_replace(['€', ' '], '', $price);
+            $price = str_replace(',', '.', $price);
+
+            $items[] = [
+                'id' => $item['id'],
+                'name' => $dishQ->getProperty('name'),
+                'price' => (float)$price,
+                'qty' => (int)$item['qty']
+            ];
+        }
+
+        $newOrder->setItems($items);
+
+        $this->orderRepository->add($newOrder);
+        $this->persistenceManager->persistAll();
+
+        $this->response->setStatusCode(200);
+        $this->view->assign('value', ['status' => 'ok']);
+    }
+
+    private function parseWhatsAppOrder(string $rawBody): array
+    {
+        $payload = json_decode($rawBody, true);
+        $msg     = $payload['entry'][0]['changes'][0]['value']['messages'][0] ?? null;
+
+        if (!$msg || !str_starts_with($msg['text']['body'] ?? '', 'Neue Bestellung:')) {
+            return [];
+        }
+
+        $text   = $msg['text']['body'];
+        $result = [
+            'phone'       => $msg['from'],
+            'receiveDate' => (new \DateTime())->setTimestamp((int)$msg['timestamp']),
+            'name'        => '',
+            'pickupTime'  => '',
+            'message'     => '',
+            'cart'        => [],
+        ];
+
+        foreach (explode("\n", trim($text)) as $line) {
+            $line = trim($line);
+            if (empty($line))                             continue;
+            if (str_starts_with($line, 'Name:'))          $result['name']       = trim(substr($line, 5));
+            elseif (str_starts_with($line, 'Abholzeit:')) $result['pickupTime'] = trim(substr($line, 10));
+            elseif (str_starts_with($line, 'Nachricht:')) $result['message']    = trim(substr($line, 10));
+            elseif (preg_match('/^(\d+)x\s+(.+)$/', $line, $m)) $result['cart'][] = ['qty' => (int)$m[1], 'name' => trim($m[2])];
+        }
+
+        return $result;
+    }
+
+    private function verifyMetaSignature(string $rawBody): void
+    {
+        $appSecret = 'dcafbd71844d3b733d77e94cafbe1db8'; 
+        $signature = $_SERVER['HTTP_X_HUB_SIGNATURE_256'] ?? '';
+
+        $expected = 'sha256=' . hash_hmac('sha256', $rawBody, $appSecret);
+
+        if (!hash_equals($expected, $signature)) {
+            $this->response->setStatusCode(403);
+            throw new \Neos\Flow\Mvc\Exception\StopActionException();
+        }
     }
 
 }

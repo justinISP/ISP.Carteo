@@ -170,29 +170,6 @@ function sendWhatsApp(btn) {
         text += `${item.qty}x ${item.name}%0A`;
     }
 
-    fetch('/api/order', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            customer: {
-                name: document.getElementById('custName').value,
-                phone: document.getElementById('phone').value,
-                pickupTime: document.getElementById('pickupTime').value,
-                message: document.getElementById('custMessage').value
-            },
-            cart: Object.values(cart)
-        })
-    })
-    .then(res => res.text())
-    .then(data => {
-        console.log('Response:', data);
-    })
-    .catch(err => {
-        console.error('Fetch Fehler:', err);
-    });
-
     text += `%0AGesamt: ${document.getElementById('totalPrice').innerText}%0A`;
     text += `Name: ${name}%0A`;
     text += `Abholzeit: ${time}%0A`;
