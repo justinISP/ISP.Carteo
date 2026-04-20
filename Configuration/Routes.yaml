@@ -5,3 +5,22 @@
     '@package': 'ISP.Carteo'
     '@controller': 'Order'
     '@action': 'submit'
+-
+  name: 'WhatsApp Webhook Verify'
+  uriPattern:  'api/webhook'
+  httpMethods: ['GET']
+  defaults:
+    '@package':    'ISP.Home'
+    '@controller': 'Webhook'
+    '@action':     'verify'
+    '@format':     'json'
+
+-
+  name: 'WhatsApp Webhook Receive'
+  uriPattern:  'api/webhook'
+  httpMethods: ['POST']
+  defaults:
+    '@package':    'ISP.Home'
+    '@controller': 'Webhook'
+    '@action':     'receive'
+    '@format':     'json'
