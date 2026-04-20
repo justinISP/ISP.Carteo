@@ -33,4 +33,13 @@ class OrderRepository extends Repository
         
     }
 
+    public function findOneByMessageId($msgId) {
+        
+        $entries = '\ISP\Carteo\Domain\Model\Order';
+        $query = $this->persistenceManager->createQueryForType($entries);
+        $result = $query->matching($query->equals('messageid', $msgId))->execute();
+        return $result;
+        
+    }
+
 }
