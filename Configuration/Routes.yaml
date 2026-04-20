@@ -10,7 +10,7 @@
   uriPattern:  'api/webhook'
   httpMethods: ['GET']
   defaults:
-    '@package':    'ISP.Home'
+    '@package':    'ISP.Carteo'
     '@controller': 'Webhook'
     '@action':     'verify'
     '@format':     'json'
@@ -20,7 +20,7 @@
   uriPattern:  'api/webhook'
   httpMethods: ['POST']
   defaults:
-    '@package':    'ISP.Home'
+    '@package':    'ISP.Carteo'
     '@controller': 'Webhook'
     '@action':     'receive'
     '@format':     'json'
