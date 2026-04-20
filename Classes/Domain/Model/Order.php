@@ -37,6 +37,11 @@ class Order {
     protected $message;
 
     /**
+     * @var string
+     */
+    protected $messageId;
+    
+    /**
      * @var \DateTime $created
      */
     protected $created;
@@ -120,6 +125,23 @@ class Order {
         $this->message = $message;
     }
 
+    /**
+     * @return string
+     */
+    public function getMessageId()
+    {
+        return $this->messageId;
+    }
+
+    /**
+     * @param string $messageId
+     * @return void
+     */
+    public function setMessageId($messageId)
+    {
+        $this->messageId = $messageId;
+    }
+    
     /**
      * @return \DateTime
      */
