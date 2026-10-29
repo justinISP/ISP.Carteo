@@ -203,7 +203,7 @@ class OrderController extends \Neos\Flow\Mvc\Controller\ActionController {
      */
     public function verifyAction(): void
     {
-        $verifyToken = '98177c25dff95b149249329148e028457ff7bc1aceb96fe6287b62d24e75a95f'; // selbst gewählt, gleicher Wert wie in Meta
+        $verifyToken = ''; // selbst gewählt, gleicher Wert wie in Meta
 
         $mode      = $this->request->getArgument('hub_mode');
         $token     = $this->request->getArgument('hub_verify_token');
@@ -308,7 +308,7 @@ class OrderController extends \Neos\Flow\Mvc\Controller\ActionController {
 
     private function verifyMetaSignature(string $rawBody): void
     {
-        $appSecret = 'dcafbd71844d3b733d77e94cafbe1db8'; 
+        $appSecret = ''; 
         $signature = $_SERVER['HTTP_X_HUB_SIGNATURE_256'] ?? '';
 
         $expected = 'sha256=' . hash_hmac('sha256', $rawBody, $appSecret);
